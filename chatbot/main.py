@@ -1,8 +1,11 @@
 from chatbot.intents import IntentClassifier
+from chatbot.qa import QuestionAnswering
 
 class TravelBookingChatbot:
     def __init__(self):
         self.name = None
+        dataset_path = "../data/dataset.csv"
+        self.qa = QuestionAnswering(dataset_path)
         self.intent_classifier = IntentClassifier()
         self.intent_classifier.load_model("intent_classifier.pkl")
 
@@ -46,6 +49,8 @@ class TravelBookingChatbot:
             return self.handle_how_are_you()
         elif predicted_intent == "ask_capabilities":
             return self.handle_ask_capabilities()
+        elif predicted_intent == "dataset_question":  # 处理数据集问题
+            return self.qa.answer(user_input)
         else:
             return "I'm sorry, I didn't understand that."
 
