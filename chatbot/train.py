@@ -1,20 +1,61 @@
 from chatbot.intents import IntentClassifier
+from collections import Counter
 
-# 数据集：用户输入和对应的意图标签
+
+# 新的训练数据集
 data = [
-    ("hello", "greeting"),
-    ("hi there", "greeting"),
-    ("hey", "greeting"),
-    ("good morning", "greeting"),
-    ("goodbye", "farewell"),
-    ("see you later", "farewell"),
+    # 问候语
+    ("hello", "greet"),
+    ("hi", "greet"),
+    ("hey", "greet"),
+    ("hey there", "greet"),
+    ("good morning", "greet"),
+    ("good afternoon", "greet"),
+    ("good evening", "greet"),
+
+    # 询问机器人功能
+    ("what can you do", "ask_capabilities"),
+    ("tell me what you can do", "ask_capabilities"),
+    ("what are you capable of", "ask_capabilities"),
+    ("can you help me", "ask_capabilities"),
+    ("what's your purpose", "ask_capabilities"),
+
+    # 询问名字
+    ("what is my name", "ask_name"),
+    ("do you know my name", "ask_name"),
+    ("tell me my name", "ask_name"),
+    ("who am I", "ask_name"),
+
+    # 提供名字
+    ("my name is Alice", "tell_name"),
+    ("call me Bob", "tell_name"),
+    ("i am Charlie", "tell_name"),
+    ("please call me David", "tell_name"),
+    ("you can call me Emma", "tell_name"),
+
+    # 状态询问
+    ("how are you", "ask_how_are_you"),
+    ("how are you doing", "ask_how_are_you"),
+    ("are you okay", "ask_how_are_you"),
+    ("how's it going", "ask_how_are_you"),
+
+    # 告别
     ("bye", "farewell"),
-    ("what's the weather", "ask_weather"),
-    ("is it raining", "ask_weather"),
-    ("tell me about the forecast", "ask_weather"),
+    ("goodbye", "farewell"),
+    ("see you", "farewell"),
+    ("talk to you later", "farewell"),
 ]
 
+data.extend([
+    ("can you help me with something", "ask_capabilities"),
+    ("what can you do for me", "ask_capabilities"),
+    ("tell me your capabilities", "ask_capabilities"),
+])
+
 texts, labels = zip(*data)
+
+label_counts = Counter(labels)
+print(label_counts)
 
 # 训练并保存模型
 classifier = IntentClassifier()
