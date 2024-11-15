@@ -1,6 +1,13 @@
+import pandas as pd
 from chatbot.intents import IntentClassifier
 from collections import Counter
 
+# 加载 CSV 数据
+dataset_path = "../data/dataset.csv"
+df = pd.read_csv(dataset_path)
+
+# 提取问题和标记意图
+csv_data = [(row['Question'].strip().lower(), "dataset_question") for _, row in df.iterrows()]
 
 # 新的训练数据集
 data = [
@@ -51,6 +58,8 @@ data.extend([
     ("what can you do for me", "ask_capabilities"),
     ("tell me your capabilities", "ask_capabilities"),
 ])
+
+data.extend(csv_data)
 
 texts, labels = zip(*data)
 
