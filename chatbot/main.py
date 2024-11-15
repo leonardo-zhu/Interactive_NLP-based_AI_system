@@ -1,53 +1,69 @@
 from chatbot.intents import IntentClassifier
 
-def welcome_message():
-    print("Welcome to Mini Chatbot!")
-    print("Type 'exit' if you want to end the conversation.\n")
+class TravelBookingChatbot:
+    def __init__(self):
+        self.name = None
+        self.intent_classifier = IntentClassifier()
+        self.intent_classifier.load_model("intent_classifier.pkl")
 
-def get_user_input():
-    """获取用户输入"""
-    try:
-        return input("You: ").strip()
-    except KeyboardInterrupt:
-        print("\nGoodbye!")
-        exit()
+    def handle_greet(self):
+        if not self.name:
+            return "Hello! What's your name?"
+        else:
+            return f"Hello again, {self.name}! How can I assist you?"
 
-# main function
-def main():
-    welcome_message()
-    classifier = IntentClassifier()
-    classifier.load_model("intent_classifier.pkl")
+    def handle_ask_name(self):
+        if self.name:
+            return f"Your name is {self.name}."
+        else:
+            return "I don't know your name yet. Could you tell me your name?"
 
-    # 聊天循环
-    while True:
-        # 获取用户输入
-        user_input = get_user_input()
+    def handle_name_update(self, user_input):
+        """提取并存储用户名字"""
+        self.name = user_input.split()[-1]  # 假设用户最后一个单词是名字
+        return f"Nice to meet you, {self.name}!"
 
-        # 检查退出条件
-        if user_input.lower() in {"exit", "quit"}:
-            print("Chatbot: Goodbye! Have a nice day!")
-            break
+    def handle_how_are_you(self):
+        return "I'm just a bot, but I'm doing great! How can I help you today?"
 
-        # 预测用户意图
-        predicted_intent = classifier.predict(user_input)
+    def handle_ask_capabilities(self):
+        return "I can help you chat, answer questions, and assist with travel bookings."
+
+    def process_input(self, user_input):
+        # 调用 IntentClassifier 预测意图
+        predicted_intent = self.intent_classifier.predict(user_input.lower())
 
         print("predicted_intent", predicted_intent)
 
-        response = "Sorry, I didn't understand that."
-
-        # 根据意图生成响应
-        if predicted_intent == "greeting":
-            response = "Hello! How can I help you today?"
-        elif predicted_intent == "farewell":
-            response = "Goodbye! Take care!"
-        elif predicted_intent == "ask_weather":
-            response = "It's sunny outside, a great day to enjoy!"
+        # 根据意图调用相应函数
+        if predicted_intent == "greet":
+            return self.handle_greet()
+        elif "my name is" in user_input.lower() or "i am" in user_input.lower():
+            return self.handle_name_update(user_input)
         elif predicted_intent == "ask_name":
-            response = "I'm your friendly chatbot. What's your name?"
+            return self.handle_ask_name()
+        elif predicted_intent == "ask_how_are_you":
+            return self.handle_how_are_you()
+        elif predicted_intent == "ask_capabilities":
+            return self.handle_ask_capabilities()
+        else:
+            return "I'm sorry, I didn't understand that."
 
-        # 输出响应
+
+def main():
+    chatbot = TravelBookingChatbot()
+    print("Welcome to the Travel Booking Chatbot!")
+    print("Type 'exit' to end the conversation.\n")
+
+    while True:
+        user_input = input("You: ").strip()
+        if user_input.lower() in ["exit", "quit"]:
+            print("Chatbot: Goodbye! Have a nice day!")
+            break
+
+        response = chatbot.process_input(user_input)
         print(f"Chatbot: {response}")
 
-# run main function
+
 if __name__ == "__main__":
     main()
