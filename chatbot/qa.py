@@ -43,4 +43,6 @@ class QuestionAnswering:
         if max_sim_score > 0.5:
             return self.qa_pairs[self.questions[max_sim_idx]]
         else:
-            return "I'm sorry, I don't have an answer for that."
+            #返回最匹配的答案，同时提示
+            uncertain_response = f"I think you might be asking: '{self.questions[max_sim_idx]}'. Here's my best guess:"
+            return uncertain_response + f" {self.qa_pairs[self.questions[max_sim_idx]]}"
