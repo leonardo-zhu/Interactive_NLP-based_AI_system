@@ -33,13 +33,6 @@ data = [
     ("tell me my name", "ask_name"),
     ("who am I", "ask_name"),
 
-    # 提供名字
-    ("my name is Alice", "tell_name"),
-    ("call me Bob", "tell_name"),
-    ("i am Charlie", "tell_name"),
-    ("please call me David", "tell_name"),
-    ("you can call me Emma", "tell_name"),
-
     # 状态询问
     ("how are you", "ask_how_are_you"),
     ("how are you doing", "ask_how_are_you"),
@@ -52,6 +45,21 @@ data = [
     ("see you", "farewell"),
     ("talk to you later", "farewell"),
 ]
+
+data.extend([
+    ("can you tell me my name", "ask_name"),
+    ("do you know my name", "ask_name"),
+    ("what's my name", "ask_name"),
+    ("who am i", "ask_name"),
+])
+
+data.extend([
+    ("what can you help with", "ask_capabilities"),
+    ("tell me what you can do", "ask_capabilities"),
+    ("what are your capabilities", "ask_capabilities"),
+    ("can you assist me", "ask_capabilities"),
+    ("what services do you provide", "ask_capabilities"),
+])
 
 data.extend([
     ("can you help me with something", "ask_capabilities"),
