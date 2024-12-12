@@ -48,13 +48,6 @@ class TravelBookingChatbot:
         # 调用 IntentClassifier 预测意图
         predicted_intent = self.intent_classifier.predict(user_input.lower())
 
-
-        if "what is my name" in user_input.lower():
-            return self.handle_ask_name()
-
-        if "what can you do" in user_input.lower() or "what are your capabilities" in user_input.lower():
-            return self.handle_ask_capabilities()
-
         # 根据意图调用相应函数
         if predicted_intent == "greet":
             return self.handle_greet()
