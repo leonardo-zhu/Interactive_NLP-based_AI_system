@@ -1,4 +1,4 @@
-from chatbot.intents import IntentClassifier
+import train
 from chatbot.qa import QuestionAnswering
 
 class TravelBookingChatbot:
@@ -6,7 +6,7 @@ class TravelBookingChatbot:
         self.name = None
         dataset_path = "../data/dataset.csv"
         self.qa = QuestionAnswering(dataset_path)
-        self.intent_classifier = IntentClassifier()
+        self.intent_classifier = train.main()
         self.intent_classifier.load_model("intent_classifier.pkl")
 
     def handle_greet(self):
