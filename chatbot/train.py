@@ -52,10 +52,17 @@ data.extend([
     ("tell me your capabilities", "ask_capabilities"),
 ])
 
+# book flight
 data.extend([
-    ("can you help me with something", "ask_capabilities"),
-    ("what can you do for me", "ask_capabilities"),
-    ("tell me your capabilities", "ask_capabilities"),
+    ("i want to book a flight from london to paris", "book_flight"),
+    ("book a round trip from new york to tokyo", "book_flight"),
+    ("can i get a ticket to dubai next monday", "book_flight"),
+    ("change my flight date to tomorrow", "change_flight_date"),
+    ("can i move my flight to next week", "change_flight_date"),
+    ("reschedule my flight to the 20th of this month", "change_flight_date"),
+    ("are there any flights available on friday", "check_flight_availability"),
+    ("check flights from berlin to madrid on 25th", "check_flight_availability"),
+    ("what flights are available from boston to la next sunday", "check_flight_availability"),
 ])
 
 # farewell
