@@ -1,30 +1,31 @@
 # Interactive_NLP-based_AI_system
-A dialogue-based system in Python which allows a user to complete a transaction (see below) with an AI, commonly known as a chatbot, or a conversational AI. 
+A Python-based dialogue system enabling users to do transactions with an AI, typically referred to as a chatbot or conversational AI. 
 
 ### 1. Introduction
 
-The Travel Booking Chatbot is designed to facilitate users in planning their travels by providing services such as booking flights, answering queries about travel destinations, and modifying existing travel plans. Built with Python, this chatbot leverages natural language processing (NLP) techniques to understand and respond to user queries effectively.
+The Travel Booking Chatbot is intended to assist users in organising their trips by offering services such as flight reservations, addressing enquiries regarding travel destinations, and altering current travel arrangements. This chatbot, developed in Python, utilises natural language processing (NLP) techniques to comprehend and address customer enquiries efficiently.
 
 ### 2. Chatbot Architecture
 
 #### Functionality
 
-The chatbot supports various functions crucial for travel planning:
-- Booking Flights: Users can request to book flights between destinations on specific dates. 
-- Changing Flight Dates: Allows users to modify their existing flight bookings. 
-- Checking Flight Availability: Users can inquire about available flights on specific dates to different destinations.
+The chatbot facilitates multiple essential functions for travel planning:
+- Booking Flights: Users may request to reserve flights between destinations on specific dates.  
+- Changing Flight Dates: Allows Permits users to alter their current flight reservations.  
+- Verifying Flight Availability: Users may request information regarding available flights on designated dates to various destinations.
 
 #### Implementation
 
 The implementation involves several Python files:
-- main.py: Acts as the entry point of the chatbot, handling interactions with users and integrating various components like intent recognition and response generation. 
-- intents.py: Defines the IntentClassifier class which uses a logistic regression model for intent classification. The classifier is trained on text data transformed by CountVectorizer and TfidfTransformer to identify user intents.
-- train.py: Contains code for training the intent classifier with example dialogues and user queries. 
-- qa.py: Manages question-answering capabilities, leveraging the trained models to respond to user queries.
+- main.py: Serves as the chatbot's entry point, managing user interactions and integrating components such as intent recognition and response creation. 
+- intents.py: Specifies the IntentClassifier class that employs a logistic regression model for intent classification. The classifier is trained on text input processed by CountVectorizer and TfidfTransformer to discern user intents.
+- train.py: Includes code for training the intent classifier with sample dialogues and user enquiries. 
+- qa.py: Oversees question-answering functionalities, utilising the trained models to address customer enquiries.
 
 #### Justification
 
-The logistic regression model was chosen for intent classification due to its effectiveness in handling linear relationships within textual data. The use of TF-IDF for feature extraction helps in emphasizing important words and reducing the impact of frequently occurring less informative words.
+The logistic regression model was selected for intent categorisation because of its efficacy in managing linear relationships in textual data. The application of TF-IDF for feature extraction accentuates significant terms while diminishing the influence of commonly occurring, less informative words.
+
 
 #### Illustrations
 
@@ -34,38 +35,39 @@ The logistic regression model was chosen for intent classification due to its ef
 
 #### Prompt Design
 
-The chatbot employs conversational markers and structured prompts to guide the interaction flow and make the conversation feel more natural. For example:
-- Acknowledgments: Simple phrases like “Got it,” “Alright,” and “Thank you” are used to acknowledge user inputs.
-- Feedback: Positive feedback such as “Good job” is used to encourage continued interaction.
-- Error Prompts: When an error is detected, the chatbot uses friendly reprompts like “I’m sorry, I didn’t catch that. Could you repeat?”
+The chatbot utilises conversational indicators and structured prompts to facilitate the interaction flow and enhance the naturalness of the dialogue. For instance:
+- Acknowledgements: Concise expressions such as “Understood,” “Affirmative,” and “Thank you” are employed to recognise user contributions.
+- Feedback: Affirmative remarks like “Good job” serve to promote ongoing engagement.
+- Error Prompts: Upon detecting an error, the chatbot employs amicable reprompts such as “I’m sorry, I didn’t catch that.” “Could you reiterate?”
 
 #### Context Tracking
 
-The chatbot maintains context over multiple turns, allowing users to build upon previous interactions without needing to repeat themselves. For instance, if a user asks about flights to Paris and then follows up with a query about the weather there, the chatbot understands that “there” refers to Paris.
+The chatbot preserves context over several exchanges, enabling users to elaborate on prior encounters without redundancy. For example, if a customer enquires about flights to Paris and thereafter asks about the weather, the chatbot comprehends that “there” pertains to Paris.
 
 #### Personalisation
 
-Where possible, the chatbot personalizes interactions by using the user’s name and tailoring responses based on the user’s past preferences and interactions. This approach enhances the user experience by making interactions feel more individualized and attentive.
+The chatbot personalises encounters by utilising the user's name and customising responses according to the user's previous preferences and engagements. This method improves the user experience by rendering interactions more personalised and attentive.
 
 #### Error Handling
 
-The chatbot is designed to handle errors gracefully by providing helpful suggestions or asking clarifying questions. This helps to maintain the flow of conversation and reduces user frustration. For example, if the chatbot fails to understand a request, it might say, “I’m not sure I understood. Did you mean to ask about flight options?”
+The chatbot is engineered to manage blunders adeptly by offering constructive ideas or posing clarifying enquiries. This facilitates conversational continuity and mitigates user irritation. For instance, if the chatbot does not comprehend a request, it may respond, “I’m uncertain if I understood.” Were you enquiring about flight alternatives?
 
 #### Confirmation
 
-To minimize errors and ensure user satisfaction, the chatbot employs a mix of explicit and implicit confirmation techniques depending on the context:
-- Explicit Confirmations: For critical actions like booking a flight, the chatbot confirms the details with the user before proceeding.
-- Implicit Confirmations: For less critical information, such as answering general queries, confirmations are woven into the response to reassure the user without requiring additional input.
+To reduce errors and guarantee user pleasure, the chatbot utilises a combination of explicit and implicit confirmation methods based on the context.
+- Explicit Confirmations: For essential operations such as flight reservations, the chatbot verifies the data with the user prior to proceeding.
+- Implicit Confirmations: For less crucial information, such as addressing general enquiries, confirmations are included into the response to comfort the user without necessitating further input.
+
 
 #### Discoverability
 
-The chatbot is designed to help users discover and explore its capabilities through guided prompts and suggestions. It informs users about available commands and features at appropriate moments, enhancing usability and engagement.
+The chatbot is engineered to assist users in uncovering and examining its functionalities via directed prompts and recommendations. It notifies users of accessible actions and features at opportune times, hence improving usability and engagement.
 
 
 ### 4. Evaluation
 
-The evaluation involved usability testing with a group of potential users who were asked to perform tasks like booking a flight or changing a booking. The participants provided feedback on the ease of use, understanding of the chatbot’s responses, and overall satisfaction.
+The evaluation included usability testing with a cohort of prospective customers tasked with activities such as booking a flight or modifying a reservation. The participants offered evaluations on the usability, comprehension of the chatbot's replies, and general contentment.
 
 ### 5. Discussion
 
-The evaluation results indicated that while users appreciated the chatbot’s ability to quickly process requests and provide pertinent information, some found the conversational flow to be limited in handling more complex queries. Reflecting on these findings, future improvements could include implementing more sophisticated NLP techniques and expanding the training dataset to cover a broader range of conversational scenarios.
+The evaluation results revealed that users valued the chatbot's efficiency in processing questions and delivering relevant information; yet, some perceived its conversational flow as inadequate for addressing more intricate enquiries. Considering these findings, future enhancements may involve the use of advanced NLP techniques and the expansion of the training dataset to encompass a wider array of conversational contexts.
