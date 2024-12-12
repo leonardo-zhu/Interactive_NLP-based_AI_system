@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 
 class IntentClassifier:
     def __init__(self):
-        self.count_vect = CountVectorizer(stop_words="english", ngram_range=(1, 2))
+        self.count_vect = CountVectorizer(stop_words=None, ngram_range=(1, 2))
         self.tfidf_transformer = TfidfTransformer(use_idf=True, smooth_idf=True, sublinear_tf=True)
         self.classifier = LogisticRegression(random_state=0, class_weight="balanced")
 
