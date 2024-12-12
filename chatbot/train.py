@@ -54,15 +54,13 @@ data.extend([
 
 # book flight
 data.extend([
+    ("booking a flight", "book_flight"),
+    ("book a flight", "book_flight"),
+    ("i want to book a flight", "book_flight"),
+    ("i want to reserve a flight", "book_flight"),
     ("i want to book a flight from london to paris", "book_flight"),
     ("book a round trip from new york to tokyo", "book_flight"),
     ("can i get a ticket to dubai next monday", "book_flight"),
-    ("change my flight date to tomorrow", "change_flight_date"),
-    ("can i move my flight to next week", "change_flight_date"),
-    ("reschedule my flight to the 20th of this month", "change_flight_date"),
-    ("are there any flights available on friday", "check_flight_availability"),
-    ("check flights from berlin to madrid on 25th", "check_flight_availability"),
-    ("what flights are available from boston to la next sunday", "check_flight_availability"),
 ])
 
 # farewell
@@ -77,8 +75,6 @@ data.extend([
 # data.extend(csv_data)
 
 def main():
-    data.extend(csv_data)
-
     texts, labels = zip(*data)
 
     label_counts = Counter(labels)
@@ -92,3 +88,6 @@ def main():
     print("Model training complete.")
 
     return classifier
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,4 @@
+import re
 import train
 from chatbot.qa import QuestionAnswering
 from utils import Colors, print_colored
@@ -5,6 +6,12 @@ from utils import Colors, print_colored
 class TravelBookingChatbot:
     def __init__(self):
         self.name = None
+
+        self.flightFrom = None
+        self.flightTo = None
+        self.flightDate = None
+        self.flightPassengers = None
+
         dataset_path = "../data/dataset.csv"
         self.qa = QuestionAnswering(dataset_path)
         self.intent_classifier = train.main()
@@ -31,10 +38,25 @@ class TravelBookingChatbot:
         return "I'm just a bot, but I'm doing great! How can I help you today?"
 
     def handle_book_flight(self, user_input):
-        # Example simplistic implementation; in practice, connect to a flight booking API
-        return "Booking your flight. Details: " + user_input
+        if not self.flightFrom or not self.flightTo or not self.flightDate or not self.flightPassengers:
+            self.flightFrom = input("You want to fly from: ")
+            self.flightTo = input("And to: ")
+            self.flightDate = input("Please enter the flight date (DD/MM/YYYY): ")
+
+            # if flight date is not in the correct format, ask again
+            pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$"
+            while not bool(re.match(pattern, self.flightDate)):
+                self.flightDate = input("Please enter the flight date in the correct format (DD/MM/YYYY): ")
+
+            self.flightPassengers = input("How many passengers will be flying? ")
+
+            while not self.flightPassengers.isdigit() or int(self.flightPassengers) <= 0:
+                self.flightPassengers = input("Please enter a valid number of passengers: ")
+
+            return f"Booking flight from {self.flightFrom} to {self.flightTo} on {self.flightDate} for {self.flightPassengers} passengers. Is it correct?"
 
     def handle_change_flight_date(self, user_input):
+        print("Your current flight date is:", self.flightDate, "")
         # Example simplistic implementation; in practice, connect to a flight management system
         return "Changing your flight date. Details: " + user_input
 
@@ -43,7 +65,7 @@ class TravelBookingChatbot:
         return "Checking flight availability for: " + user_input
 
     def handle_ask_capabilities(self):
-        return "I can help you chat, answer questions, and assist with travel bookings."
+        return "You can ask me to book flights, check flight availability, or change your booking details. Just let me know what you need help with!"
 
     def process_input(self, user_input):
         try:
@@ -63,10 +85,6 @@ class TravelBookingChatbot:
                 return self.handle_ask_capabilities()
             elif predicted_intent == "book_flight":
                 return self.handle_book_flight(user_input)
-            elif predicted_intent == "change_flight_date":
-                return self.handle_change_flight_date(user_input)
-            elif predicted_intent == "check_flight_availability":
-                return self.handle_check_flight_availability(user_input)
             elif predicted_intent == "dataset_question":  # 处理数据集问题
                 return self.qa.answer(user_input)
             else:
