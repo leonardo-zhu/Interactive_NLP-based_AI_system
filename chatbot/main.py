@@ -1,5 +1,6 @@
 import train
 from chatbot.qa import QuestionAnswering
+from utils import Colors, print_colored
 
 class TravelBookingChatbot:
     def __init__(self):
@@ -75,17 +76,20 @@ class TravelBookingChatbot:
 
 def main():
     chatbot = TravelBookingChatbot()
-    print("Welcome to the Travel Booking Chatbot!")
-    print("Type 'exit' to end the conversation.\n")
+    print_colored("Welcome to the Travel Booking Chatbot!\n", Colors.CYAN)
+    print_colored("Type 'exit' to end the conversation.\n", Colors.CYAN)
+
+    print()
 
     while True:
-        user_input = input("You: ").strip()
+        print_colored("User: ", Colors.GREEN)
+        user_input = input().strip()
         if user_input.lower() in ["exit", "quit"]:
-            print("Chatbot: Goodbye! Have a nice day!")
+            print_colored("Chatbot: Goodbye! Have a nice day!", Colors.BLUE)
             break
 
         response = chatbot.process_input(user_input)
-        print(f"Chatbot: {response}")
+        print_colored(f"Chatbot: {response}", Colors.RED, '\n')
 
 
 if __name__ == "__main__":
