@@ -1,6 +1,6 @@
 import re
 import train
-from chatbot.qa import QuestionAnswering
+from qa import QuestionAnswering
 from utils import Colors, print_colored
 
 class TravelBookingChatbot:
