@@ -15,7 +15,7 @@ class TravelBookingChatbot:
         dataset_path = "../data/dataset.csv"
         self.qa = QuestionAnswering(dataset_path)
         self.intent_classifier = train.main()
-        self.intent_classifier.load_model("intent_classifier.pkl")
+        self.intent_classifier.load_model()
 
     def handle_greet(self):
         if not self.name:
@@ -37,10 +37,10 @@ class TravelBookingChatbot:
     def handle_how_are_you(self):
         return "I'm just a bot, but I'm doing great! How can I help you today?"
 
-    def handle_book_flight(self, user_input):
+    def handle_book_flight(self, user_input=None):
         if not self.flightFrom or not self.flightTo or not self.flightDate or not self.flightPassengers:
-            self.flightFrom = input("You want to fly from: ")
-            self.flightTo = input("And to: ")
+            self.flightFrom = input("You want to fly from: ").capitalize()
+            self.flightTo = input("And to: ").capitalize()
             self.flightDate = input("Please enter the flight date (DD/MM/YYYY): ")
 
             # if flight date is not in the correct format, ask again
@@ -55,14 +55,44 @@ class TravelBookingChatbot:
 
             return f"Booking flight from {self.flightFrom} to {self.flightTo} on {self.flightDate} for {self.flightPassengers} passengers. Is it correct?"
 
-    def handle_change_flight_date(self, user_input):
-        print("Your current flight date is:", self.flightDate, "")
+    def handle_change_flight(self, user_input):
         # Example simplistic implementation; in practice, connect to a flight management system
-        return "Changing your flight date. Details: " + user_input
+        print_colored(f"Chatbot: Current flight details: {self.handle_check_flight()}\n", Colors.RED)
+        print_colored("Chatbot: Would you like to change your flight details?", Colors.RED, '\n')
 
-    def handle_check_flight_availability(self, user_input):
-        # Example simplistic implementation; in practice, check availability via an airline API
-        return "Checking flight availability for: " + user_input
+
+        print_colored("User: ", Colors.GREEN)
+        confirm_change = input().lower()
+
+        # confirm if user wants to change flight
+
+
+        if self.intent_classifier.predict(confirm_change) == "yes":
+
+            # store previous details
+            pre_flightFrom, self.flightFrom = self.flightFrom, None
+            pre_flightTo, self.flightTo = self.flightTo, None
+            pre_flightDate, self.flightDate = self.flightDate, None
+            pre_flightPassengers, self.flightPassengers = self.flightPassengers, None
+
+            self.handle_book_flight()
+
+            # check which details have changed
+            changed_details = [
+                f"flight from {pre_flightFrom} to {self.flightFrom}" if pre_flightFrom != self.flightFrom else None,
+                f"flight to {self.flightTo}" if pre_flightTo != self.flightTo else None,
+                f"flight date to {self.flightDate}" if pre_flightDate != self.flightDate else None,
+                f"number of passengers to {self.flightPassengers}" if pre_flightPassengers != self.flightPassengers else None,
+            ]
+
+            changed_details = [detail for detail in changed_details if detail]
+
+            return "Your flight details have been updated. You have changed " + ", ".join(changed_details) + "."
+
+        return "No problem! Let me know if you need help with anything else."
+
+    def handle_check_flight(self, user_input=None):
+        return "Your current details: " + self.flightFrom + " to " + self.flightTo + " on " + self.flightDate + " for " + self.flightPassengers + " passengers."
 
     def handle_ask_capabilities(self):
         return "You can ask me to book flights, check flight availability, or change your booking details. Just let me know what you need help with!"
@@ -75,20 +105,35 @@ class TravelBookingChatbot:
             # handle intent
             if predicted_intent == "greet":
                 return self.handle_greet()
-            elif "my name is" in user_input.lower() or "i am" in user_input.lower():
+
+            if "my name is" in user_input.lower() or "i am" in user_input.lower():
                 return self.handle_name_update(user_input)
-            elif predicted_intent == "ask_name":
+
+            if predicted_intent == "ask_name":
                 return self.handle_ask_name()
-            elif predicted_intent == "ask_how_are_you":
+
+            if predicted_intent == "ask_how_are_you":
                 return self.handle_how_are_you()
-            elif predicted_intent == "ask_capabilities":
+
+            if predicted_intent == "ask_capabilities":
                 return self.handle_ask_capabilities()
-            elif predicted_intent == "book_flight":
+
+            if predicted_intent == "book_flight":
                 return self.handle_book_flight(user_input)
-            elif predicted_intent == "dataset_question":  # 处理数据集问题
+
+            if predicted_intent == "change_flight":
+                return self.handle_change_flight(user_input)
+
+            if predicted_intent == "check_flight":
+                return self.handle_check_flight(user_input)
+
+            if predicted_intent == "yes":
+                return "Great! What else can I help you with?"
+
+            if predicted_intent == "dataset_question":
                 return self.qa.answer(user_input)
-            else:
-                return "I'm sorry, I didn't understand that."
+
+            return "I'm sorry, I didn't understand that."
         except ValueError:
             return "I'm not sure what you mean. Could you rephrase that?"
 
