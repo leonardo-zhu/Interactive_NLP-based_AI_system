@@ -2,7 +2,7 @@ import pandas as pd
 import nlpaug.augmenter.word as naw
 import nltk
 nltk.download('wordnet')
-from chatbot.intents import IntentClassifier
+from intents import IntentClassifier
 from collections import Counter
 
 # load CSV dataset
