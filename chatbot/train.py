@@ -6,7 +6,7 @@ from intents import IntentClassifier
 from collections import Counter
 
 # load CSV dataset
-dataset_path = "../data/dataset.csv"
+dataset_path = "./data/dataset.csv"
 df = pd.read_csv(dataset_path)
 
 # extract questions and labels
@@ -25,7 +25,6 @@ data.extend([
     ("good afternoon", "greet"),
     ("good evening", "greet"),
 
-    # 增加多样表达
     ("hello there", "greet"),
     ("hi there", "greet"),
     ("hiya", "greet"),
@@ -47,7 +46,6 @@ data.extend([
     ("definitely", "yes"),
     ("indeed", "yes"),
 
-    # 新增变体
     ("yup", "yes"),
     ("affirmative", "yes"),
     ("certainly", "yes"),
@@ -62,7 +60,7 @@ data.extend([
     ("tell me my name", "ask_name"),
     ("who am I", "ask_name"),
     ("can you tell me my name", "ask_name"),
-    ("do you know my name", "ask_name"),  # 与上重复，可换一种说法
+    ("do you know my name", "ask_name"),
     ("what's my name", "ask_name"),
     ("who am i", "ask_name"),
 ])

@@ -12,7 +12,7 @@ class TravelBookingChatbot:
         self.flightDate = None
         self.flightPassengers = None
 
-        dataset_path = "../data/dataset.csv"
+        dataset_path = "./data/dataset.csv"
         self.qa = QuestionAnswering(dataset_path)
         self.intent_classifier = train.main()
         self.intent_classifier.load_model()
